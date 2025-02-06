@@ -77,9 +77,9 @@ public class ScreenControl : MonoBehaviour
                  {
                    foundObjectGame.inGameObject.SetActive(false);
                  }
-                 else{
-                    Debug.Log("Game não encontrado");
-                 }
+                //  else{
+                //     Debug.Log("Game não encontrado");
+                //  }
             }
             
             // Ativa o novo GameObject

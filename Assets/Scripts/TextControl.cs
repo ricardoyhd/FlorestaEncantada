@@ -7,15 +7,16 @@ public class TextControl : MonoBehaviour
     public TextMeshProUGUI rightButton;
     public TextMeshProUGUI endText;
 
-    public void SetLeftButtonText(string value){
-        leftButton.text = value;
+    public void SetLeftButtonText(string text){
+        leftButton.text = text;
     }
-    public void SetRightButtonText(string value){
-        rightButton.text = value;
+    public void SetRightButtonText(string text){
+        rightButton.text = text;
     }
-    public void SetEndText(string value){
-        endText.text = value;
+    public void SetEndText(string text){
+        endText.text = text;
     }
+
     // public void SetAllText(string category, string level, string error, string tip){
     //     SetCategory(category);
     //     SetLevel(level);
