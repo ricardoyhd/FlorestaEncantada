@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class Mapa : MonoBehaviour
@@ -51,7 +50,7 @@ public class Mapa : MonoBehaviour
         if((_navigator.GetCurrentLocation() == "Fortaleza do Firewallian" ||
             _navigator.GetCurrentLocation() == "Voo do Quantumore") &&
             _dialogue.finishedDialogue == true){
-            HandleEnd("Parábens!");
+            HandleEnd("Parabéns!");
         }
         else if((_navigator.GetCurrentLocation() == "Caminho do Patchpanda" ||
             _navigator.GetCurrentLocation() == "Sincronizado do Syncrab") &&
