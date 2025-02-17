@@ -10,8 +10,9 @@ public class Dialogue : MonoBehaviour
     List<string> startLines = new List<string>{"Olá, jovem gafanhoto! Seja muito bem-vindo a essa aventura super divertida pela Floresta Encantada: Jornada Digital. Durante o percurso, você irá encarar vários desafios.", 
                             "Mas atenção! Suas escolhas são muito importantes para que consiga sair dessa floresta! Vamos começar?",
                             "Então vamos lá! Você deve escolher entre:"};
-    private float textSpeed = 0.05f;
+    private float textSpeed = 0.02f;
     private ScreenControl _screen;
+    private SoundManager _sound;
     public bool finishedDialogue = false;
 
     private int index;
@@ -21,18 +22,13 @@ public class Dialogue : MonoBehaviour
         textComponent.text = string.Empty;
 
         _screen = FindObjectOfType<ScreenControl>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        _sound = FindObjectOfType<SoundManager>();
     }
 
     public void NextDialogue(){
         if(textComponent.text == lines[index]){
             NextLine();
-            textSpeed = 0.05f;
+            textSpeed = 0.02f;
         }
         else{
             StopAllCoroutines();
@@ -61,8 +57,14 @@ public class Dialogue : MonoBehaviour
     }
 
     IEnumerator TypeLine(){
+        int i = 0;
         foreach(char c in lines[index].ToCharArray()){
             textComponent.text += c;
+            i++;
+            if(i == 5){ 
+                _sound.SpeechSound(); 
+                i = 0;
+            }
             yield return new WaitForSeconds(textSpeed);
         }
     }

@@ -1,104 +1,26 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-
-// public class Node {
-//     public int value;
-//     public Node left;
-//     public Node right;
-
-//     public Node(int value) {
-//         this.value = value;
-//         left = right = null;
-//     }
-// }
-
-// public class Arvore : MonoBehaviour {
-//     [SerializeField] public List<int> array = new List<int>();
-
-//     private Node currentNode;
-
-//     public Node BuildTree(List<int> array) {
-//         if (array == null || array.Count == 0) return null;
-//         return BuildTreeRecursive(array, 0);
-//     }
-
-//     private Node BuildTreeRecursive(List<int> array, int index) {
-//         if (index >= array.Count) return null;
-
-//         Node node = new Node(array[index]);
-
-//         node.left = BuildTreeRecursive(array, 2 * index + 1);
-//         node.right = BuildTreeRecursive(array, 2 * index + 2);
-
-//         return node;
-//     }
-
-//     private TextControl _interface;
-
-//     void Start() {
-//         _interface = FindObjectOfType<TextControl>();
-
-//         Node root = BuildTree(array);
-//         currentNode = root; 
-//         UpdateButtons(); 
-//     }
-
-//     private void UpdateButtons() {
-//         Debug.Log("LEFT: " + currentNode.left.value + " || RIGHT: " + currentNode.right.value);
-
-//         if (currentNode.left != null) {
-//             _interface.SetLeftButtonTexts(currentNode.left.value);
-//         } else {
-//             _interface.SetLeftButtonTexts(0);
-//         }
-
-//         if (currentNode.right != null) {
-//             _interface.SetRightButtonTexts(currentNode.right.value);
-//         } else {
-//             _interface.SetRightButtonTexts(0);
-//         }
-//     }
-
-//     private void PrintTree(Node node) {
-//         if (node == null) return;
-//         PrintTree(node.left);
-//         Debug.Log(node.value);
-//         PrintTree(node.right);
-//     }
-
-//     public void ShowLeftNode() {
-//         if (currentNode.left != null) {
-//             currentNode = currentNode.left;
-//             UpdateButtons();
-//         }
-//     }
-
-//     public void ShowRightNode() {
-//         if (currentNode.right != null) {
-//             currentNode = currentNode.right;
-//             UpdateButtons();
-//         }
-//     }
-// }
 
 public class TreeNode
 {
-    public string LocationName { get; set; } // Name or ID of the location
-    public List<TreeNode> Children { get; set; } // List of child nodes
-    public TreeNode Parent { get; set; } // Reference to the parent node
+    public string LocationName { get; set; } 
+    public string LocationDescription { get; set; } 
+    public List<TreeNode> Children { get; set; }
+    public TreeNode Parent { get; set; }
+    public int ImageIndex;
 
-    public TreeNode(string locationName)
+    public TreeNode(string locationName, string locationDescription = "empty", int index = 0)
     {
         LocationName = locationName;
+        LocationDescription = locationDescription;
         Children = new List<TreeNode>();
+        ImageIndex = index;
         Parent = null;
     }
 
-    // Add a child node
     public void AddChild(TreeNode child)
     {
-        child.Parent = this; // Set the parent of the child
+        child.Parent = this;
         Children.Add(child);
     }
 }
@@ -112,17 +34,14 @@ public class MapTree
         Root = new TreeNode(rootLocationName);
     }
 
-    // Example method to build a sample map
     public void BuildSampleMap()
     {
-        TreeNode netlobo = new TreeNode("Caminho do Netlobo");
-        TreeNode crypowym = new TreeNode("Labirinto do Crypowym");
-        TreeNode firewallian = new TreeNode("Fortaleza do Firewallian");
-        TreeNode patchpanda = new TreeNode("Caminho do Patchpanda");
-        TreeNode syncrab = new TreeNode("Sincronizado do Syncrab");
-        TreeNode quantumore = new TreeNode("Voo do Quantumore");
-        // TreeNode win = new TreeNode("win");
-        // TreeNode lose = new TreeNode("lose");
+        TreeNode netlobo = new TreeNode("Caminho do Netlobo", "Caminho do Netlobo\n\nO Netlobo ilumina o caminho com seus pelos de fibra ótica, ajudando a detectar falhas na rede. Nesse caminho, você rastreará o caminho, podendo ou não evitar perigos invisíveis.", 0);
+        TreeNode crypowym = new TreeNode("Labirinto do Crypowym", "Labirinto do Crypowym\n\nO Cryptowyrm protege um labirinto de encriptação impenetrável. Nesse caminho, você deve resolverá enigmas de criptografia e superar seus desafios de segurança digital.", 1);
+        TreeNode firewallian = new TreeNode("Fortaleza do Firewallian", "Fortaleza do Firewallian\n\nO Firewallian, uma criatura que combina dragão e muralha, bloqueia ameaças externas. Para avançar, você provará suas intenções e respeitará as camadas de segurança.", 2);
+        TreeNode patchpanda = new TreeNode("Caminho do Patchpanda", "Caminho do Patchpanda\n\nO Patchpanda mantém a floresta livre de falhas, corrigindo buracos de segurança. Para seguir, você deverá ajudar a reparar os erros e manter a integridade do sistema.", 3);
+        TreeNode syncrab = new TreeNode("Sincronizado do Syncrab", "Sincronizado do Syncrab\n\nO Syncrab garante que os dados fluam sem erros. Para continuar, você precisará ajudar a sincronizar informações entre diferentes partes da floresta, mantendo tudo em ordem.", 4);
+        TreeNode quantumore = new TreeNode("Voo do Quantumore", "Voo do Quantumore\n\nO Quantumore, corvo quântico, está em múltiplos lugares ao mesmo tempo. Para avançar, compreenda a natureza probabilística de seus movimentos e resolver dilemas quânticos.", 5);
 
         Root.AddChild(netlobo);
         Root.AddChild(crypowym);
@@ -142,7 +61,6 @@ public class MapNavigator
         _currentNode = startNode;
     }
 
-    // Move to a child node
     public bool MoveToChild(int childIndex)
     {
         if (childIndex >= 0 && childIndex < _currentNode.Children.Count)
@@ -154,7 +72,6 @@ public class MapNavigator
         return false;
     }
 
-    // Move to the parent node
     public bool MoveToParent()
     {
         if (_currentNode.Parent != null)
@@ -165,17 +82,29 @@ public class MapNavigator
         return false;
     }
 
-    // Get the current location
     public string GetCurrentLocation()
     {
         return _currentNode.LocationName;
     }
-
     public string GetLocationName(int index){
         if (index >= 0 && index < _currentNode.Children.Count)
         {
             return _currentNode.Children[index].LocationName;
         }
         return "Local inválido";
+    }
+    public string GetLocationDescription(int index){
+        if (index >= 0 && index < _currentNode.Children.Count)
+        {
+            return _currentNode.Children[index].LocationDescription;
+        }
+        return "Local inválido";
+    }
+    public int GetImageIndex(int index){
+        if (index >= 0 && index < _currentNode.Children.Count)
+        {
+            return _currentNode.Children[index].ImageIndex;
+        }
+        return 0;
     }
 }
